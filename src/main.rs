@@ -50,3 +50,11 @@ fn error() -> ! {
     eprintln!("modexp: usage: cargo run [x] [y] [m]");
     std::process::exit(1);
 }
+
+#[test]
+fn test_modexp() {
+    assert_eq!(modexp(2, 20, 17), 16);
+    assert_eq!(modexp(13, 5, 11), 10);
+    assert_eq!(modexp(3, 2, 5), 4);
+    assert_eq!(modexp(100, 2, 7777), 2223);
+}
