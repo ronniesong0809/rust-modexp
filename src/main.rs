@@ -51,10 +51,26 @@ fn error() -> ! {
     std::process::exit(1);
 }
 
+fn test_modexp(a: u64, b: u64, c: u64, d: u64) {
+    assert_eq!(modexp(a, b, c), d);
+}
+
 #[test]
-fn test_modexp() {
-    assert_eq!(modexp(2, 20, 17), 16);
-    assert_eq!(modexp(13, 5, 11), 10);
-    assert_eq!(modexp(3, 2, 5), 4);
-    assert_eq!(modexp(100, 2, 7777), 2223);
+fn test_case1() {
+    test_modexp(2, 20, 17, 16);
+}
+
+#[test]
+fn test_case2() {
+    test_modexp(13, 5, 11, 10);
+}
+
+#[test]
+fn test_case3() {
+    test_modexp(3, 2, 5, 4);
+}
+
+#[test]
+fn test_case4() {
+    test_modexp(100, 2, 7777, 2223);
 }
