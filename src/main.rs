@@ -1,3 +1,5 @@
+// Ronnie Song
+
 use std::env;
 use std::str::FromStr;
 
@@ -5,20 +7,18 @@ fn main() {
     let mut numbers = Vec::new();
 
     for arg in env::args().skip(1) {
-        numbers.push(u64::from_str( & arg).expect("err parsing"));
+        numbers.push(u64::from_str(&arg).expect("err parsing"));
     }
 
     if numbers.len() != 3 {
         error();
     }
 
-    let a = numbers[0];
-    let b = numbers[1];
-    let c = numbers[2];
+    let (a, b, c) = (numbers[0], numbers[1], numbers[2]);
     
     let result = modexp(a, b, c);
 
-    println!("The modexp of {:?} is {}", numbers, result);
+    println!("The modexp of {} ** {} (mod {}) is {}", a, b, c, result);
 }
 
 fn modexp(x: u64, y: u64, m: u64) -> u64 {
@@ -42,7 +42,7 @@ fn modexp(x: u64, y: u64, m: u64) -> u64 {
 
 fn modulo(x: u64, y: u64) -> u64 {
     let rem = x % y;
-    println!("x is {}, y is {}, result is {}", x, y, rem);
+    // println!("x is {}, y is {}, result is {}", x, y, rem);
     rem
 }
 
@@ -51,6 +51,7 @@ fn error() -> ! {
     std::process::exit(1);
 }
 
+#[cfg(test)]
 fn test_modexp(a: u64, b: u64, c: u64, d: u64) {
     assert_eq!(modexp(a, b, c), d);
 }
