@@ -1,7 +1,5 @@
 use std::env;
 use std::str::FromStr;
-use std::io::Write;
-use std::io;
 
 fn main() {
     let mut numbers = Vec::new();
@@ -11,8 +9,7 @@ fn main() {
     }
 
     if numbers.len() != 3 {
-        writeln!(io::stderr(), "Usage: cargo run [number] [number] ...").unwrap();
-        std::process::exit(1);
+        error();
     }
 
     let a = numbers[0];
@@ -35,10 +32,21 @@ fn modexp(x: u64, y: u64, m: u64) -> u64 {
 
     let mut z = modexp(x, y / 2, m);
 
-    z = z * z % m;
+    z = modulo(z * z, m);
 
     if y % 2 != 0 {
-        z = z * x % m;
+        z = modulo(z * x, m);
     }
     z
+}
+
+fn modulo(x: u64, y: u64) -> u64 {
+    let rem = x % y;
+    println!("x is {}, y is {}, result is {}", x, y, rem);
+    rem
+}
+
+fn error() -> ! {
+    eprintln!("modexp: usage: cargo run [x] [y] [m]");
+    std::process::exit(1);
 }
