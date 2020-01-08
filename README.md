@@ -1,4 +1,7 @@
 # modexp
+
+[![Build Status](https://travis-ci.com/ronniesong0809/rust-modexp.svg?branch=master)](https://travis-ci.com/ronniesong0809/rust-modexp)
+
 Copyright (c) 2020 Ronnie Song
 
 This is a Rust based command-line calculator that computes *modexp()*.
