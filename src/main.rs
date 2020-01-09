@@ -7,15 +7,22 @@ fn main() {
     let mut numbers = Vec::new();
 
     for arg in env::args().skip(1) {
-        numbers.push(u64::from_str(&arg).expect("err parsing"));
+        // take only non-negative x and y and positive m, and all should be less than 2**32
+        let num = u32::from_str(&arg).expect("Error Parsing");
+        numbers.push(num);
     }
 
     if numbers.len() != 3 {
         error();
     }
 
-    let (a, b, c) = (numbers[0], numbers[1], numbers[2]);
-    
+    // gives the maximum possible 32-bit number as a u64
+    let (a, b, c) = (
+        u64::from(numbers[0]),
+        u64::from(numbers[1]),
+        u64::from(numbers[2]),
+    );
+
     let result = modexp(a, b, c);
 
     println!("The modexp of {} ** {} (mod {}) is {}", a, b, c, result);
