@@ -1,31 +1,40 @@
 // Ronnie Song
 
 use std::env;
-use std::str::FromStr;
 
 fn main() {
     let mut numbers = Vec::new();
 
     for arg in env::args().skip(1) {
-        // take only non-negative x and y and positive m, and all should be less than 2**32
-        let num = u32::from_str(&arg).expect("Error Parsing");
-        numbers.push(num);
+        numbers.push(arg);
     }
 
     if numbers.len() != 3 {
         error();
     }
 
-    // gives the maximum possible 32-bit number as a u64
-    let (a, b, c) = (
-        u64::from(numbers[0]),
-        u64::from(numbers[1]),
-        u64::from(numbers[2]),
-    );
+    for i in 0..3 {
+        if numbers[2] == "0" {
+            error();
+        }
+
+        let x = numbers[i].parse::<u32>();
+        match x {
+            Ok(_ok) => (),
+            Err(e) => {
+                eprint!("\n{} ", e);
+                error()
+            }
+        }
+    }
+
+    let a = numbers[0].parse().expect("err parsing");
+    let b = numbers[1].parse().expect("err parsing");
+    let c = numbers[2].parse().expect("err parsing");
 
     let result = modexp(a, b, c);
 
-    println!("The modexp of {} ** {} (mod {}) is {}", a, b, c, result);
+    println!("\nThe modexp of {} ** {} (mod {}) is {}", a, b, c, result);
 }
 
 fn modexp(x: u64, y: u64, m: u64) -> u64 {
@@ -54,7 +63,7 @@ fn modulo(x: u64, y: u64) -> u64 {
 }
 
 fn error() -> ! {
-    eprintln!("modexp: usage: cargo run [x] [y] [m]");
+    eprintln!("\nmodexp: usage: cargo run [x] [y] [m]");
     std::process::exit(1);
 }
 
